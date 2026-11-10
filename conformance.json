@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "id": "zcode",
+  "kind": "channel",
+  "model": "zcode/GLM-5.3-Flash",
+  "live_model": "zcode/GLM-5.3-Flash",
+  "auth": {
+    "accessToken": "mock-zc-token",
+    "expiresAt": 2051222400,
+    "nickname": "zcode-mock",
+    "refreshToken": "mock-zc-rt",
+    "uid": "zcode-mock"
+  },
+  "account": {
+    "nickname": "zcode-mock",
+    "uid": "zcode-mock"
+  },
+  "routes": [
+    {
+      "method": "GET",
+      "path": ".*/v1/client/configs.*",
+      "kind": "json",
+      "body": "{\"models\":[{\"id\":\"mock-flash\",\"name\":\"Mock Flash\"}],\"data\":[{\"id\":\"mock-flash\"}]}"
+    },
+    {
+      "method": "POST",
+      "path": ".*/anthropic/v1/messages.*",
+      "kind": "sse_anthropic",
+      "text": "你好，我是 zcode mock 上游。",
+      "chunks": 2,
+      "usage": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0,
+        "completion_tokens": 9,
+        "prompt_tokens": 12
+      }
+    },
+    {
+      "method": "GET",
+      "path": ".*/billing/balance.*",
+      "kind": "json",
+      "body": "{\"balance\":1000}"
+    }
+  ],
+  "auth_prefixes": [
+    "zcode"
+  ],
+  "notes": [
+    "Anthropic SSE；身份块准入（无 system → 上游 405/3012）；acceptedModels 过滤"
+  ]
+}
